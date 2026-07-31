@@ -6,7 +6,7 @@
  * @package  Edges\Synchronizer
  * @author   TheWhatis <snton-gogo@mail.ru>
  * @license  http://opensource.org/licenses/Unlicense The Unlicense License
- * @version  2.0.0
+ * @version  3.0.0
  * @link     https://gitflic.ru/projects/edges/synchronizer
  */
 
@@ -31,9 +31,9 @@ interface MatcherInterface
     public static function create(object $settings): MatcherInterface;
 
     /**
-     * @param T[] $sources
+     * Произвести сопоставление
      */
-    public function match(array $sources): void;
+    public function match(): void;
 
     /**
      * @return Matched[]
