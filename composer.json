@@ -3,7 +3,7 @@
     "description": "Synchronize all kinds of things",
     "homepage": "http://github.com/TheWhatis/synchronizer",
     "keywords": ["synchronization", "sync", "edges"],
-    "version": "2.0.0",
+    "version": "2.0.1",
     "license": "Unlicense",
     "authors": [
         {
@@ -14,8 +14,8 @@
         }
     ],
     "support": {
-        "issues": "https://gitflic.ru/projects/edges/synchronizer/issues",
-        "wiki": "https://gitflic.ru/projects/edges/synchronizer/wiki"
+        "issues": "https://gitflic.ru/project/edges/synchronizer/issue",
+        "wiki": "https://gitflic.ru/project/edges/synchronizer"
     },
     "require": {
         "php": "^8.0"
