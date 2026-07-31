@@ -26,46 +26,21 @@ use Edges\Synchronizer\SynchronizerInterface;
 require 'vendor/autoload.php';
 ```
 
-Создайте свой синхронизатор:
-
+Создайте сущность с которой будете работать
 ```php
-/**
- * @extends AbstractSynchronizer<ExampleSource, ExampleTarget, ExampleSettings>
- */
-class ExampleSynchronizer implements AbstractSynchronizer
+class ExampleEntity
 {
-    /**
-     * Синхронизировать
-     *
-     * @param object|ExampleSettings $settings Настройки для синхронизации
-     *
-     * @return bool
-     */
-    public function synchronize(object|ExampleSettings $settings): bool
+    private string $identifier;
+
+    public function setIdentifier(string $identifier): self
     {
-        if (! $settings instanceof ExampleSettings) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    'Settings of [%s] does not supports for [%s]',
-                    $settings::class,
-                    ExampleSynchronizer::class,
-                )
-            );
-        }
-
-        // Какая-то логика
-
-        return true;
+        $this->identifier = $identifier;
+        return $this;
     }
 
-    public static function supportsSource(SynchronizerSourceInterface $source): bool
+    public function getIdentifier(): string;
     {
-        return $source instanceof ExampleSource;
-    }
-
-    public static function supportsTarget(SynchronizerTargetInterface $target): bool
-    {
-        return $target instanceof ExampleTarget;
+        return $this->identifier;
     }
 }
 ```
@@ -125,6 +100,96 @@ class ExampleTarget implements SynchronizerTargetInterface
     }
 }
 
+```
+
+Создайте Matcher для сопоставления объектов
+```php
+use Ds\Map;
+
+/**
+ * @implements MatcherInterface<ExampleEntity>
+ */
+class ExampleMatcher implements MatcherInterface
+{
+    private array $matches = [];
+    private Map $targetIdentifierTargetMap;
+    private Map $targetIdentifierSourcesMap;
+
+    public function __construct(
+    ) {
+        $this->targetIdentifierTargetMap = new Map;
+        $this->sourceIdentifierSourcesMap = new Map;
+    }
+
+    public function match(array $sources): void
+    {
+        // Логика создания matches, targetIdentifierTargetMap и targetIdentifierSourcesMap
+    }
+
+    public function getMatches(): array
+    {
+        return $this->matches;
+    }
+
+    public function targetIdentifierTargetMap(): Amp
+    {
+        return $this->targetIdentifierTargetMap;
+    }
+
+    public function targetIdentifierSourcesMap(): Map
+    {
+        return $this->targetIdentifierSourcesMap;
+    }
+}
+```
+
+Создайте свой синхронизатор:
+
+```php
+/**
+ * @extends AbstractSynchronizer<ExampleEntity, ExampleSource, ExampleTarget, ExampleMatcher, ExampleSettings>
+ */
+class ExampleSynchronizer implements AbstractSynchronizer
+{
+    /**
+     * Синхронизировать
+     *
+     * @param object|ExampleSettings $settings Настройки для синхронизации
+     *
+     * @return bool
+     */
+    public function synchronize(object|ExampleSettings $settings): bool
+    {
+        if (! $settings instanceof ExampleSettings) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    'Settings of [%s] does not supports for [%s]',
+                    $settings::class,
+                    ExampleSynchronizer::class,
+                )
+            );
+        }
+
+        // Какая-то логика
+
+        return true;
+    }
+
+    public static function supportsSource(SynchronizerSourceInterface $source): bool
+    {
+        return $source instanceof ExampleSource;
+    }
+
+    public static function supportsTarget(SynchronizerTargetInterface $target): bool
+    {
+        return $target instanceof ExampleTarget;
+    }
+
+    public static function supportsMatcher(MatcherInterface $matcher): bool
+    {
+        return $matcher instanceof ExampleMatcher;
+    }
+}
 ```
 
 Создайте свой проект, совместимый с синхронизатором:

@@ -13,8 +13,7 @@
 namespace Edges\Synchronizer;
 
 /**
- * @template Source of object
- * @template Target of object
+ * @template T of object
  *
  * @category Synchronizer
  * @package  Edges\Synchronizer
@@ -25,12 +24,12 @@ namespace Edges\Synchronizer;
 interface MatchedInterface
 {
     /**
-     * @return Source[]
+     * @return T[]
      */
     public function getSources(): array;
 
     /**
-     * @return Target[]
+     * @return T[]
      */
     public function getTargets(): array;
 
@@ -41,12 +40,12 @@ interface MatchedInterface
     public function getTargetBy(): mixed;
 
     /**
-     * @param Source $source
+     * @param T $source
      */
     public function addSource(object $source): void;
 
     /**
-     * @param Target $target
+     * @param T $target
      */
     public function addTarget(object $target): void;
 }

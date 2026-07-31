@@ -26,6 +26,7 @@ abstract class AbstractSynchronizer implements SynchronizerInterface
     public function __construct(
         protected SynchronizerSourceInterface $source,
         protected SynchronizerTargetInterface $target,
+        protected MatcherInterface $matcher,
     ) {
         // ...
     }
@@ -40,17 +41,28 @@ abstract class AbstractSynchronizer implements SynchronizerInterface
      */
     public static function create(
         SynchronizerSourceInterface $source,
-        SynchronizerTargetInterface $target
+        SynchronizerTargetInterface $target,
+        MatcherInterface $matcher,
     ): AbstractSynchronizer {
         if (! static::supportsSource($source)) {
-            throw new \InvalidArgumentException(sprintf('[%s] does not support [%s].', static::class, get_class($source)));
+            throw new \InvalidArgumentException(
+                sprintf('[%s] does not support [%s].', static::class, get_class($source))
+            );
         }
 
         if (! static::supportsTarget($target)) {
-            throw new \InvalidArgumentException(sprintf('[%s] does not support [%s].', static::class, get_class($target)));
+            throw new \InvalidArgumentException(
+                sprintf('[%s] does not support [%s].', static::class, get_class($target))
+            );
         }
 
-        return new static($source, $target);
+        if (! static::supportsMatcher($matcher)) {
+            throw new \InvalidArgumentException(
+                sprintf('[%s] does not support [%s].', static::class, get_class($matcher))
+            );
+        }
+
+        return new static($source, $target, $matcher);
     }
 
     /**
@@ -60,7 +72,7 @@ abstract class AbstractSynchronizer implements SynchronizerInterface
      *
      * @return bool
      */
-    abstract public function supportsSource(SynchronizerSourceInterface $source): bool;
+    abstract public static function supportsSource(SynchronizerSourceInterface $source): bool;
 
     /**
      * Првоерить что цель поддерживается
@@ -69,5 +81,14 @@ abstract class AbstractSynchronizer implements SynchronizerInterface
      *
      * @return bool
      */
-    abstract public function supportsTarget(SynchronizerTargetInterface $target): bool;
+    abstract public static function supportsTarget(SynchronizerTargetInterface $target): bool;
+
+    /**
+     * Проверить что Matcher поддерживается
+     *
+     * @param Matcher $matcher Матчер
+     *
+     * @return bool
+     */
+    abstract public static function supportsMatcher(MatcherInterface $matcher): bool;
 }

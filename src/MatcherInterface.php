@@ -15,9 +15,8 @@ namespace Edges\Synchronizer;
 use Ds\Map;
 
 /**
- * @template Source of object
- * @template Target of object
- * @template Matched of MatchedInterface<Target>
+ * @template T of object
+ * @template Matched of MatchedInterface<T>
  *
  * @category Synchronizer
  * @package  Edges\Synchronizer
@@ -25,20 +24,25 @@ use Ds\Map;
  * @license  http://opensource.org/licenses/Unlicense The Unlicense License
  * @link     https://gitflic.ru/projects/edges/synchronizer
  */
-Interface MatcherInterface
+interface MatcherInterface
 {
     /**
-     * @param Source[] $sources
+     * @param T[] $sources
      */
     public function match(array $sources): void;
 
     /**
-     * @return Map<string, Target>
+     * @return Matched[]
+     */
+    public function getMatches(): array;
+
+    /**
+     * @return Map<string, T>
      */
     public function targetIdentifierTargetMap(): Map;
 
     /**
-     * @return Map<string, Source[]>
+     * @return Map<string, T[]>
      */
     public function targetIdentifierSourcesMap(): Map;
 }

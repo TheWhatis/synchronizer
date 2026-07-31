@@ -15,8 +15,10 @@ namespace Edges\Synchronizer;
 /**
  * Интерфейс синхронизатора
  *
+ * @template T of object
  * @template Source of SynchronizerSourceInterface
  * @template Target of SynchronizerTargetInterface
+ * @template Matcher of MatcherInterface<T>
  * @template Settings of object
  *
  * @category Synchronizer
@@ -32,10 +34,15 @@ interface SynchronizerInterface
      *
      * @param Source $source Источник
      * @param Target $target Цель
+     * @param Matcher $matcher Матчер (сопоставитель)
      *
      * @return SynchronizerInterface
      */
-    public static function create(SynchronizerSourceInterface $source, SynchronizerTargetInterface $target): SynchronizerInterface;
+    public static function create(
+        SynchronizerSourceInterface $source,
+        SynchronizerTargetInterface $target,
+        MatcherInterface $matcher,
+    ): SynchronizerInterface;
 
     /**
      * Синхронизировать
