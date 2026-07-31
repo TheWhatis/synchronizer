@@ -16,9 +16,10 @@ Synchronizer
 namespace Acme\MyApplication;
 
 // To create a Synchronizer:
-use Edges\Synchronizer\AbstractSynchronizer;
+use Edges\Synchronizer\MatcherInterface;
 use Edges\Synchronizer\SynchronizerSourceInterface;
 use Edges\Synchronizer\SynchronizerTargetInterface;
+use Edges\Synchronizer\AbstractSynchronizer;
 
 // To make your project compatible with Synchronizer:
 use Edges\Synchronizer\SynchronizerInterface;
