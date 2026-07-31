@@ -128,12 +128,6 @@ class ExampleMatcher implements MatcherInterface
 {
     private array $matches = [];
 
-    public function __construct(
-    ) {
-        $this->targetIdentifierTargetMap = new Map;
-        $this->sourceIdentifierSourcesMap = new Map;
-    }
-
     public function match(array $sources): void
     {
         // Логика создания matches
