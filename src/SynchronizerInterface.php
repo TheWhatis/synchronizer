@@ -1,88 +1,46 @@
-<?php
+<?php declare(strict_types=1);
 /**
- * FlameCore Synchronizer
- * Copyright (C) 2017 IceFlame.net
- *
- * Permission to use, copy, modify, and/or distribute this software for
- * any purpose with or without fee is hereby granted, provided that the
- * above copyright notice and this permission notice appear in all copies.
- *
  * PHP version 8
  *
  * @category Synchronizer
- * @package  CashCarryShop\Synchronizer
- * @author   Christian Neff <christian.neff@gmail.com>
- * @license  http://opensource.org/licenses/MIT The MIT License
- * @version  1.0.0
+ * @package  Edges\Synchronizer
+ * @author   TheWhatis <snton-gogo@mail.ru>
+ * @license  http://opensource.org/licenses/Unlicense The Unlicense License
+ * @version  2.0.0
  * @link     https://github.com/cashcarryshop/synchronizer
  */
 
-namespace CashCarryShop\Synchronizer;
-
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+namespace Edges\Synchronizer;
 
 /**
  * Интерфейс синхронизатора
  *
+ * @template Settings of object
+ *
  * @category Synchronizer
- * @package  CashCarryShop\Synchronizer
- * @author   Christian Neff <christian.neff@gmail.com>
+ * @package  Edges\Synchronizer
+ * @author   TheWhatis <snton-gogo@mail.ru>
  * @license  Unlicense <https://unlicense.org>
  * @link     https://github.com/cashcarryshop/synchronizer
  */
 interface SynchronizerInterface
 {
     /**
+     * Создать синхронизатор
+     *
+     * @param SynchronizerSourceInterface $source Источник
+     * @param SynchronizerTargetInterface $target Цель
+     *
+     * @return SynchronizerInterface
+     */
+    public static function create(SynchronizerSourceInterface $source, SynchronizerTargetInterface $target): SynchronizerInterface;
+
+    /**
      * Синхронизировать
      *
-     * @param array $settings Настройки для синхронизации
+     * @param Settings $settings Настройки для синхронизации
      *
      * @return bool
      */
-    public function synchronize(array $settings = []): bool;
-
-    /**
-     * Установить источник
-     *
-     * @param SynchronizerSourceInterface $source Источник
-     *
-     * @return static
-     */
-    public function setSource(SynchronizerSourceInterface $source): static;
-
-    /**
-     * Установить цель
-     *
-     * @param SynchronizerTargetInterface $target Цель
-     *
-     * @return static
-     */
-    public function setTarget(SynchronizerTargetInterface $target): static;
-
-    /**
-     * Проверить, поддерживается ли источник
-     *
-     * @param SynchronizerSourceInterface $source Источник
-     *
-     * @return bool
-     */
-    public function supportsSource(SynchronizerSourceInterface $source): bool;
-
-    /**
-     * Проверить, поддерживается ли цель
-     *
-     * @param SynchronizerTargetInterface $target Цель
-     *
-     * @return bool
-     */
-    public function supportsTarget(SynchronizerTargetInterface $target): bool;
-
-    /**
-     * Установить наблюдателя (диспетчер событий)
-     *
-     * @param EventDispatcherInterface $dispatcher Наблюдатель
-     *
-     * @return static
-     */
-    public function observe(EventDispatcherInterface $dispatcher): static;
+    public function synchronize(object $settings): bool;
 }

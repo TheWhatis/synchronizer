@@ -1,128 +1,73 @@
-<?php
+<?php declare(strict_types=1);
 /**
- * FlameCore Synchronizer
- * Copyright (C) 2017 IceFlame.net
- *
- * Permission to use, copy, modify, and/or distribute this software for
- * any purpose with or without fee is hereby granted, provided that the
- * above copyright notice and this permission notice appear in all copies.
- *
  * PHP version 8
  *
  * @category Synchronizer
- * @package  CashCarryShop\Synchronizer
- * @author   Christian Neff <christian.neff@gmail.com>
- * @license  http://opensource.org/licenses/MIT The MIT License
- * @version  1.0.0
+ * @package  Edges\Synchronizer
+ * @author   TheWhatis <snton-gogo@mail.ru>
+ * @license  http://opensource.org/licenses/Unlicense The Unlicense License
+ * @version  2.0.0
  * @link     https://github.com/cashcarryshop/synchronizer
  */
 
-namespace CashCarryShop\Synchronizer;
-
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+namespace Edges\Synchronizer;
 
 /**
  * Абстрактный класс синхронизатора
  *
  * @category Synchronizer
- * @package  CashCarryShop\Synchronizer
- * @author   Christian Neff <christian.neff@gmail.com>
- * @license  http://opensource.org/licenses/MIT The MIT License
+ * @package  Edges\Synchronizer
+ * @author   TheWhatis <snton-gogo@mail.ru>
+ * @license  http://opensource.org/licenses/Unlicense The Unlicense License
  * @link     https://github.com/cashcarryshop/synchronizer
  */
 abstract class AbstractSynchronizer implements SynchronizerInterface
 {
-    /**
-     * Источник
-     *
-     * @var SynchronizerSourceInterface
-     */
-    protected SynchronizerSourceInterface $source;
-
-    /**
-     * Цель
-     *
-     * @var SynchronizerTargetInterface
-     */
-    protected SynchronizerTargetInterface $target;
-
-    /**
-     * Диспетчер событий
-     *
-     * @var EventDispatcherInterface
-     */
-    protected EventDispatcherInterface $dispatcher;
+    public function __construct(
+        protected SynchronizerSourceInterface $source,
+        protected SynchronizerTargetInterface $target,
+    ) {
+        // ...
+    }
 
     /**
      * Создать экземпляр синхронизации
      *
      * @param SynchronizerSourceInterface $source Источник
      * @param SynchronizerTargetInterface $target Цель
+     *
+     * @return AbstractSynchronizer
      */
-    public function __construct(
+    public static function create(
         SynchronizerSourceInterface $source,
         SynchronizerTargetInterface $target
-    ) {
-        $this->setSource($source);
-        $this->setTarget($target);
+    ): AbstractSynchronizer {
+        if (! static::supportsSource($source)) {
+            throw new \InvalidArgumentException(sprintf('%s does not support %s.', static::class, get_class($source)));
+        }
+
+        if (! static::supportsTarget($target)) {
+            throw new \InvalidArgumentException(sprintf('%s does not support %s.', static::class, get_class($target)));
+        }
+
+        return new static($source, $target);
     }
 
     /**
-     * Установить источник
+     * Проверить что источник поддерживается
      *
      * @param SynchronizerSourceInterface $source Источник
      *
-     * @return static
+     * @return bool
      */
-    public function setSource(SynchronizerSourceInterface $source): static
-    {
-        if (!$this->supportsSource($source)) {
-            throw new \InvalidArgumentException(sprintf('%s does not support %s.', get_class($this), get_class($source)));
-        }
-
-        $this->source = $source;
-        return $this;
-    }
+    abstract public function supportsSource(SynchronizerSourceInterface $source): bool;
 
     /**
-     * Установить цель
+     * Првоерить что цель поддерживается
      *
      * @param SynchronizerTargetInterface $target Цель
      *
-     * @return static
+     * @return bool
      */
-    public function setTarget(SynchronizerTargetInterface $target): static
-    {
-        if (!$this->supportsTarget($target)) {
-            throw new \InvalidArgumentException(sprintf('%s does not support %s.', get_class($this), get_class($target)));
-        }
-
-        $this->target = $target;
-        return $this;
-    }
-
-    /**
-     * Установить наблюдателя (диспетчер событий)
-     *
-     * @param EventDispatcherInterface $dispatcher Наблюдатель
-     *
-     * @return static
-     */
-    public function observe(EventDispatcherInterface $dispatcher): static
-    {
-        $this->dispatcher = $dispatcher;
-        return $this;
-    }
-
-    /**
-     * Вызвать событие
-     *
-     * @return void
-     */
-    public function event(): void
-    {
-        if (isset($this->dispatcher)) {
-            $this->dispatcher->dispatch(...func_get_args());
-        }
-    }
+    abstract public function supportsTarget(SynchronizerTargetInterface $target): bool;
 }

@@ -1,39 +1,36 @@
-<?php
+<?php declare(strict_types=1);
 /**
- * FlameCore Synchronizer
- * Copyright (C) 2017 IceFlame.net
- *
- * Permission to use, copy, modify, and/or distribute this software for
- * any purpose with or without fee is hereby granted, provided that the
- * above copyright notice and this permission notice appear in all copies.
- *
  * PHP version 8
  *
  * @category Synchronizer
- * @package  CashCarryShop\Synchronizer
- * @author   Christian Neff <christian.neff@gmail.com>
- * @license  http://opensource.org/licenses/MIT The MIT License
- * @version  0.1
+ * @package  Edges\Synchronizer
+ * @author   TheWhatis <snton-gogo@mail.ru>
+ * @license  http://opensource.org/licenses/Unlicense The Unlicense License
+ * @version  1.0.0
  * @link     https://github.com/cashcarryshop/synchronizer
  */
 
-namespace CashCarryShop\Synchronizer;
+namespace Edges\Synchronizer;
 
 /**
  * Интерфейс цели синхронизации
  *
+ * @template Settings of object
+ *
  * @category Synchronizer
- * @package  CashCarryShop\Synchronizer
- * @author   Christian Neff <christian.neff@gmail.com>
- * @license  http://opensource.org/licenses/MIT The MIT License
+ * @package  Edges\Synchronizer
+ * @author   TheWhatis <snton-gogo@mail.ru>
+ * @license  http://opensource.org/licenses/Unlicense The Unlicense License
  * @link     https://github.com/cashcarryshop/synchronizer
  */
 interface SynchronizerTargetInterface
 {
     /**
-     * Создать экземпляр цели
+     * Создать источник
      *
-     * @param array $settings Настройки
+     * @param Settings $settings Настройки для источника
+     *
+     * @return SynchronizerTargetInterface
      */
-    public function __construct(array $settings);
+    public static function create(object $settings): SynchronizerTargetInterface;
 }
