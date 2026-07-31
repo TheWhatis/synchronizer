@@ -119,8 +119,6 @@ class ExampleTarget implements SynchronizerTargetInterface
 
 Создайте Matcher для сопоставления объектов
 ```php
-use Ds\Map;
-
 /**
  * @implements MatcherInterface<ExampleEntity>
  */

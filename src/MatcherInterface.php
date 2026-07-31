@@ -12,8 +12,6 @@
 
 namespace Edges\Synchronizer;
 
-use Ds\Map;
-
 /**
  * @template T of object
  * @template Matched of MatchedInterface<T>
