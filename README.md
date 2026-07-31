@@ -3,7 +3,7 @@ Synchronizer
 
 [![Latest Stable](http://img.shields.io/packagist/v/edges/synchronizer.svg)](https://packagist.org/packages/edges/synchronizer)
 [![Scrutinizer](http://img.shields.io/scrutinizer/g/edges/synchronizer.svg)](https://scrutinizer-ci.com/g/TheWhatis/synchronizer)
-[![License](http://img.shields.io/packagist/l/edges/synchronizer.svg)](https://packagist.org/packages/edges/synchronizer)
+[![License](http://img.shields.io/packagist/l/edges/synchronizer.svg?refresh=true)](https://packagist.org/packages/edges/synchronizer)
 
 Эта библиотека позволяет легко синхронизировать самые разные вещи. Он имеет красивый и простой в использовании API.
 
