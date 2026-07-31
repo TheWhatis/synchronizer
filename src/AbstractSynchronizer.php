@@ -7,7 +7,7 @@
  * @author   TheWhatis <snton-gogo@mail.ru>
  * @license  http://opensource.org/licenses/Unlicense The Unlicense License
  * @version  2.0.0
- * @link     https://github.com/cashcarryshop/synchronizer
+ * @link     https://gitflic.ru/projects/edges/synchronizer
  */
 
 namespace Edges\Synchronizer;
@@ -19,7 +19,7 @@ namespace Edges\Synchronizer;
  * @package  Edges\Synchronizer
  * @author   TheWhatis <snton-gogo@mail.ru>
  * @license  http://opensource.org/licenses/Unlicense The Unlicense License
- * @link     https://github.com/cashcarryshop/synchronizer
+ * @link     https://gitflic.ru/projects/edges/synchronizer
  */
 abstract class AbstractSynchronizer implements SynchronizerInterface
 {
@@ -43,11 +43,11 @@ abstract class AbstractSynchronizer implements SynchronizerInterface
         SynchronizerTargetInterface $target
     ): AbstractSynchronizer {
         if (! static::supportsSource($source)) {
-            throw new \InvalidArgumentException(sprintf('%s does not support %s.', static::class, get_class($source)));
+            throw new \InvalidArgumentException(sprintf('[%s] does not support [%s].', static::class, get_class($source)));
         }
 
         if (! static::supportsTarget($target)) {
-            throw new \InvalidArgumentException(sprintf('%s does not support %s.', static::class, get_class($target)));
+            throw new \InvalidArgumentException(sprintf('[%s] does not support [%s].', static::class, get_class($target)));
         }
 
         return new static($source, $target);

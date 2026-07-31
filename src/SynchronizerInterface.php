@@ -7,7 +7,7 @@
  * @author   TheWhatis <snton-gogo@mail.ru>
  * @license  http://opensource.org/licenses/Unlicense The Unlicense License
  * @version  2.0.0
- * @link     https://github.com/cashcarryshop/synchronizer
+ * @link     https://gitflic.ru/projects/edges/synchronizer
  */
 
 namespace Edges\Synchronizer;
@@ -15,21 +15,23 @@ namespace Edges\Synchronizer;
 /**
  * Интерфейс синхронизатора
  *
+ * @template Source of SynchronizerSourceInterface
+ * @template Target of SynchronizerTargetInterface
  * @template Settings of object
  *
  * @category Synchronizer
  * @package  Edges\Synchronizer
  * @author   TheWhatis <snton-gogo@mail.ru>
  * @license  Unlicense <https://unlicense.org>
- * @link     https://github.com/cashcarryshop/synchronizer
+ * @link     https://gitflic.ru/projects/edges/synchronizer
  */
 interface SynchronizerInterface
 {
     /**
      * Создать синхронизатор
      *
-     * @param SynchronizerSourceInterface $source Источник
-     * @param SynchronizerTargetInterface $target Цель
+     * @param Source $source Источник
+     * @param Target $target Цель
      *
      * @return SynchronizerInterface
      */

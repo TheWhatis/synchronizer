@@ -7,7 +7,7 @@
  * @author   TheWhatis <snton-gogo@mail.ru>
  * @license  http://opensource.org/licenses/Unlicense The Unlicense License
  * @version  1.0.0
- * @link     https://github.com/cashcarryshop/synchronizer
+ * @link     https://gitflic.ru/projects/edges/synchronizer
  */
 
 namespace Edges\Synchronizer;
@@ -21,7 +21,7 @@ namespace Edges\Synchronizer;
  * @package  Edges\Synchronizer
  * @author   TheWhatis <snton-gogo@mail.ru>
  * @license  http://opensource.org/licenses/Unlicense The Unlicense License
- * @link     https://github.com/cashcarryshop/synchronizer
+ * @link     https://gitflic.ru/projects/edges/synchronizer
  */
 interface SynchronizerTargetInterface
 {

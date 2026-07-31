@@ -7,7 +7,7 @@
  * @author   TheWhatis <snton-gogo@mail.ru>
  * @license  http://opensource.org/licenses/Unlicense The Unlicense License
  * @version  1.0.0
- * @link     https://github.com/cashcarryshop/synchronizer
+ * @link     https://gitflic.ru/projects/edges/synchronizer
  */
 
 namespace Edges\Synchronizer;
@@ -17,10 +17,15 @@ use Ds\Map;
 /**
  * @template Source of object
  * @template Target of object
- *
  * @template Matched of MatchedInterface<Target>
+ *
+ * @category Synchronizer
+ * @package  Edges\Synchronizer
+ * @author   TheWhatis <snton-gogo@mail.ru>
+ * @license  http://opensource.org/licenses/Unlicense The Unlicense License
+ * @link     https://gitflic.ru/projects/edges/synchronizer
  */
-interface MatcherInterface
+Interface MatcherInterface
 {
     /**
      * @param Source[] $sources

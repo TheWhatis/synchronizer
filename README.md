@@ -1,20 +1,11 @@
 Synchronizer
 ================
 
-[![Latest Stable](http://img.shields.io/packagist/v/flamecore/synchronizer.svg)](https://packagist.org/packages/flamecore/synchronizer)
-[![Scrutinizer](http://img.shields.io/scrutinizer/g/flamecore/synchronizer.svg)](https://scrutinizer-ci.com/g/flamecore/synchronizer)
-[![License](http://img.shields.io/packagist/l/flamecore/synchronizer.svg)](https://packagist.org/packages/flamecore/synchronizer)
+[![Latest Stable](http://img.shields.io/packagist/v/edges/synchronizer.svg)](https://packagist.org/packages/edges/synchronizer)
+[![Scrutinizer](http://img.shields.io/scrutinizer/g/edges/synchronizer.svg)](https://scrutinizer-ci.com/g/edges/synchronizer)
+[![License](http://img.shields.io/packagist/l/edges/synchronizer.svg)](https://packagist.org/packages/edges/synchronizer)
 
 Эта библиотека позволяет легко синхронизировать самые разные вещи. Он имеет красивый и простой в использовании API.
-
-Реализация
-------------
-
-Библиотека Synchronizer - это всего лишь абстрактная основа. Но доступные конкретные реализации: (только для версии 0.1.0)
-
-* [FilesSynchronizer](https://github.com/FlameCore/FilesSynchronizer)
-* [DatabaseSynchronizer](https://github.com/FlameCore/DatabaseSynchronizer)
-
 
 Использование
 ----------------
@@ -25,12 +16,12 @@ Synchronizer
 namespace Acme\MyApplication;
 
 // To create a Synchronizer:
-use CashCarryShop\Synchronizer\AbstractSynchronizer;
-use CashCarryShop\Synchronizer\SynchronizerSourceInterface;
-use CashCarryShop\Synchronizer\SynchronizerTargetInterface;
+use Edges\Synchronizer\AbstractSynchronizer;
+use Edges\Synchronizer\SynchronizerSourceInterface;
+use Edges\Synchronizer\SynchronizerTargetInterface;
 
 // To make your project compatible with Synchronizer:
-use CashCarryShop\Synchronizer\SynchronizerInterface;
+use Edges\Synchronizer\SynchronizerInterface;
 
 require 'vendor/autoload.php';
 ```
@@ -38,42 +29,41 @@ require 'vendor/autoload.php';
 Создайте свой синхронизатор:
 
 ```php
-class ExampleSynchronizer extends AbstractSynchronizer
+/**
+ * @extends AbstractSynchronizer<ExampleSource, ExampleTarget, ExampleSettings>
+ */
+class ExampleSynchronizer implements AbstractSynchronizer
 {
     /**
      * Синхронизировать
      *
-     * @param array $settings Настройки для синхронизации
+     * @param object|ExampleSettings $settings Настройки для синхронизации
      *
      * @return bool
      */
-    public function synchronize(array $settings = []): bool
+    public function synchronize(object|ExampleSettings $settings): bool
     {
-        /// ... ЛОГИКА ...
+        if (! $settings instanceof ExampleSettings) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    'Settings of [%s] does not supports for [%s]',
+                    $settings::class,
+                    ExampleSynchronizer::class,
+                )
+            );
+        }
+
+        // Какая-то логика
 
         return true;
     }
 
-    /**
-     * Проверить, поддерживается ли источник
-     *
-     * @param SynchronizerSourceInterface $source Источник
-     *
-     * @return bool
-     */
-    public function supportsSource(SynchronizerSourceInterface $source): bool
+    public static function supportsSource(SynchronizerSourceInterface $source): bool
     {
         return $source instanceof ExampleSource;
     }
 
-    /**
-     * Проверить, поддерживается ли цель
-     *
-     * @param SynchronizerTargetInterface $target Цель
-     *
-     * @return bool
-     */
-    public function supportsTarget(SynchronizerTargetInterface $target): bool
+    public static function supportsTarget(SynchronizerTargetInterface $target): bool
     {
         return $target instanceof ExampleTarget;
     }
@@ -83,35 +73,58 @@ class ExampleSynchronizer extends AbstractSynchronizer
 Создайте источники и цели синхронизатора:
 
 ```php
+/**
+ * @implements SynchronizerSourceInterface<ExampleSourceSettings>
+ */
 class ExampleSource implements SynchronizerSourceInterface
 {
     /**
-     * Создать экземпляр источника
+     * Создать источник
      *
-     * @param array $settings Настройки
+     * @param Settings $settings Настройки для источника
+     *
+     * @return SynchronizerSourceInterface
      */
-    public function __construct(array $settings)
+    public static function create(object|ExampleSourceSettings $settings): SynchronizerSourceInterface
     {
-        // ... Сохраняем настройки ...
+        if (! $settings instanceof ExampleSourceSettings) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    'Settings [%s] does not supports for [%s]',
+                    $settings::class,
+                    ExampleSource::class,
+                )
+            );
+        }
     }
-
-    // .. Методы источника ...
 }
 
+/**
+ * @implements SynchronizerTargetInterface<ExampleTargetSettings>
+ */
 class ExampleTarget implements SynchronizerTargetInterface
 {
     /**
-     * Создать экземпляр цели
+     * Создать источник
      *
-     * @param array $settings Настройки
+     * @param Settings $settings Настройки для источника
+     *
+     * @return SynchronizerTargetInterface
      */
-    public function __construct(array $settings)
+    public static function create(object|ExampleTargetSettings $settings): SynchronizerTargetInterface
     {
-        // ... Сохраняем настройки ...
+        if (! $settings instanceof ExampleTargetSettings) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    'Settings [%s] does not supports for [%s]',
+                    $settings::class,
+                    ExampleTarget::class,
+                )
+            );
+        }
     }
-
-    // .. Методы цели ...
 }
+
 ```
 
 Создайте свой проект, совместимый с синхронизатором:
@@ -159,6 +172,7 @@ class Application
 ------------
 
 * Ваша версия php должна быть не меньше 8.0
+* Есть расширение ds (ext-ds) не меньше 1.3.0
 
 
 Участие
