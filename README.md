@@ -54,6 +54,11 @@ class ExampleEntity
  */
 class ExampleSource implements SynchronizerSourceInterface
 {
+    public function __construct(private ExampleSourceSettings $settings)
+    {
+        // ...
+    }
+
     /**
      * Создать источник
      *
@@ -72,6 +77,8 @@ class ExampleSource implements SynchronizerSourceInterface
                 )
             );
         }
+
+        return new ExampleSource($settings);
     }
 }
 
@@ -80,6 +87,11 @@ class ExampleSource implements SynchronizerSourceInterface
  */
 class ExampleTarget implements SynchronizerTargetInterface
 {
+    public function __construct(private ExampleTargetSettings $settings)
+    {
+        // ...
+    }
+
     /**
      * Создать источник
      *
@@ -98,6 +110,8 @@ class ExampleTarget implements SynchronizerTargetInterface
                 )
             );
         }
+
+        return new ExampleTarget($settings);
     }
 }
 
