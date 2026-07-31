@@ -35,14 +35,4 @@ interface MatcherInterface
      * @return Matched[]
      */
     public function getMatches(): array;
-
-    /**
-     * @return Map<string, T>
-     */
-    public function targetIdentifierTargetMap(): Map;
-
-    /**
-     * @return Map<string, T[]>
-     */
-    public function targetIdentifierSourcesMap(): Map;
 }

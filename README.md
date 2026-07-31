@@ -127,8 +127,6 @@ use Ds\Map;
 class ExampleMatcher implements MatcherInterface
 {
     private array $matches = [];
-    private Map $targetIdentifierTargetMap;
-    private Map $targetIdentifierSourcesMap;
 
     public function __construct(
     ) {
@@ -138,22 +136,12 @@ class ExampleMatcher implements MatcherInterface
 
     public function match(array $sources): void
     {
-        // Логика создания matches, targetIdentifierTargetMap и targetIdentifierSourcesMap
+        // Логика создания matches
     }
 
     public function getMatches(): array
     {
         return $this->matches;
-    }
-
-    public function targetIdentifierTargetMap(): Amp
-    {
-        return $this->targetIdentifierTargetMap;
-    }
-
-    public function targetIdentifierSourcesMap(): Map
-    {
-        return $this->targetIdentifierSourcesMap;
     }
 }
 ```
